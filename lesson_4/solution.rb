@@ -1,6 +1,12 @@
 
 def sum_even_number_row(row_number)
+  rows = []
+  row_length = 1
+  (1..row_number).each do |current_row_number|
 
+    row << create_row(start_integer, current_row_number)
+  end
+  rows
 end
 
 def create_row(start_integer, row_length)
@@ -8,7 +14,7 @@ def create_row(start_integer, row_length)
   current_integer = start_integer
   loop do
     row << current_integer
-    start_integer += 2
+    current_integer += 2
     break if row.length == row_length
   end
   row
