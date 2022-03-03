@@ -135,30 +135,35 @@ def ask_player_order
   order
 end
 
+def place_piece!(brd, current_player)
+  if current_player == 1
+    player_places_piece!(brd)
+  elsif current_player == 2
+    computer_places_piece!(brd)
+  end
+end  
+
+def alternate_player(current_player)
+  if current_player == 1
+    current_player = 2
+  elsif current_player == 2
+    current_player = 1
+  end
+end
+
 loop do
   score = {}
   order = ask_player_order
+
   loop do
     board = initialize_board
-    display_board(board)
-
+    current_player = order
     loop do
+      display_board(board)
       print_score(score)
-      if order == 1
-        player_places_piece!(board)
-        break if someone_won?(board) || board_full?(board)
-
-        computer_places_piece!(board)
-        break if someone_won?(board) || board_full?(board)
-        display_board(board)
-      else
-        computer_places_piece!(board)
-        display_board(board)
-        break if someone_won?(board) || board_full?(board)
-
-        player_places_piece!(board)
-        break if someone_won?(board) || board_full?(board)
-      end
+      place_piece!(board, current_player)
+      current_player = alternate_player(current_player)
+      break if someone_won?(board) || board_full?(board)
     end
 
     
